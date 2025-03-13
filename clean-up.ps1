@@ -202,13 +202,6 @@ function Set-RegistryUser {
         return
     }
     
-    $global:uninstallKeys | ForEach-Object {
-    if (-not (Test-Path $_)) {
-        Write-Output "Warning: Registry path $_ does not exist."
-    }
-    }
-
-
     $script:global:uninstallKeys = @(
         "HKU:\$sid\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
         "HKU:\$sid\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
