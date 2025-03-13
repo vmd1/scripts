@@ -93,6 +93,16 @@ function Clear-PSHistory {
     Write-Output "PowerShell history cleared."
 }
 
+function Empty-RecycleBin {
+    try {
+        [void] [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
+        [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory('C:\$Recycle.Bin', 'Delete', 'AllowSubdirectoriesToBeCreated')
+        Write-Output "Recycle bin emptied."
+    } catch {
+        Write-Output "Error while emptying recycle bin: $_"
+    }
+}
+
 while ($true) {
     Clear-Host
     Write-Host "Select an option:"
@@ -100,8 +110,9 @@ while ($true) {
     Write-Host "2. Uninstall applications"
     Write-Host "3. Delete specific registry entries"
     Write-Host "4. Clear PowerShell history"
-    Write-Host "5. Exit"
-    $choice = Read-Host "Enter your choice (1/2/3/4/5)"
+    Write-Host "5. Empty Recycle Bin"
+    Write-Host "6. Exit"
+    $choice = Read-Host "Enter your choice (1/2/3/4/5/6)"
 
     switch ($choice) {
         "1" {
@@ -122,7 +133,8 @@ while ($true) {
         "2" { Remove-Apps }
         "3" { Remove-RegistryEntry }
         "4" { Clear-PSHistory }
-        "5" { break }
+        "5" { Empty-RecycleBin }
+        "6" { break }
         default { Write-Output "Invalid choice. Try again." }
     }
 }
