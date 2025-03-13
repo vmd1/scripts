@@ -72,14 +72,20 @@ function Remove-RegistryEntry {
     }
 }
 
+function Clear-PSHistory {
+    rm (Get-PSReadLineOption).HistorySavePath
+    Write-Output "PowerShell history cleared."
+}
+
 while ($true) {
     Clear-Host
     Write-Host "Select an option:"
     Write-Host "1. View all installed applications"
     Write-Host "2. Remove installed browsers"
     Write-Host "3. Delete specific registry entries"
-    Write-Host "4. Exit"
-    $choice = Read-Host "Enter your choice (1/2/3/4)"
+    Write-Host "4. Clear PowerShell history"
+    Write-Host "5. Exit"
+    $choice = Read-Host "Enter your choice (1/2/3/4/5)"
 
     switch ($choice) {
         "1" {
@@ -99,10 +105,8 @@ while ($true) {
         }
         "2" { Remove-Browsers }
         "3" { Remove-RegistryEntry }
-        "4" { break }
+        "4" { Clear-PSHistory }
+        "5" { break }
         default { Write-Output "Invalid choice. Try again." }
     }
 }
-
-# Clear PowerShell command history
-rm (Get-PSReadLineOption).HistorySavePath
