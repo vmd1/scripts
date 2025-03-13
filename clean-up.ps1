@@ -187,6 +187,27 @@ function Remove-AppxByName {
     }
 }
 
+function Set-RegistryUser {
+    param (
+        [string]$username
+    )
+    
+    $sid = (Get-WmiObject Win32_UserAccount | Where-Object { $_.Name -eq $username }).SID
+    
+    if (-not $sid) {
+        Write-Output "User not found. Ensure the username is correct."
+        Read-Host "Press Enter to return to the menu"
+        return
+    }
+    
+    $uninstallKeys = @(
+        "HKU:\$sid\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+        "HKU:\$sid\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+    )
+    
+    Write-Output "Registry locations updated for user: $username ($sid)"
+    Read-Host "Press Enter to return to the menu"
+}
 
 while ($true) {
     Clear-Host
@@ -227,6 +248,10 @@ while ($true) {
         "6" { Get-AppxPackages }
         "7" { Remove-AppxByName }
         "8" { exit }
+        "71" {
+            $username = Read-Host "Enter the username of the target user"
+            Set-RegistryUser -username $username
+        }
         "72" { Remove-RawRegistryEntries }
         default { Write-Output "Invalid choice. Try again." }
     }
