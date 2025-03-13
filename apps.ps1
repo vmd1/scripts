@@ -4,13 +4,6 @@ $uninstallKeys = @(
 )
 $browsers = @('Opera', 'Firefox', 'Brave', 'DuckDuckGo')
 
-# Display menu
-Write-Host "Select an option:"
-Write-Host "1. View all installed applications"
-Write-Host "2. Remove installed browsers"
-Write-Host "3. Delete specific registry entries"
-$choice = Read-Host "Enter your choice (1/2/3)"
-
 function Get-InstalledApps {
     $apps = @{}
     foreach ($key in $uninstallKeys) {
@@ -35,7 +28,6 @@ function Remove-Browsers {
             if ($uninstallString) {
                 Write-Output "$app found. Uninstaller path: $uninstallString"
 
-                # Extract executable and parameters
                 if ($uninstallString -match '^"(.+?)"\s*(.*)') {
                     $exePath = $matches[1]
                     $arguments = $matches[2]
@@ -47,7 +39,6 @@ function Remove-Browsers {
                     $arguments = ""
                 }
 
-                # Run uninstaller handling paths with spaces
                 Start-Process -FilePath $exePath -ArgumentList $arguments -NoNewWindow -Wait
             }
         }
@@ -61,13 +52,11 @@ function Remove-RegistryEntry {
         return
     }
 
-    # Show installed apps with index
     $appList = $apps.Keys | Sort-Object
     for ($i = 0; $i -lt $appList.Count; $i++) {
         Write-Output "$($i + 1). $($appList[$i])"
     }
 
-    # Select apps to delete
     $selection = Read-Host "Enter the number(s) of the apps to delete (comma-separated)"
     $indexes = $selection -split ',' | ForEach-Object { $_.Trim() -as [int] }
 
@@ -83,25 +72,36 @@ function Remove-RegistryEntry {
     }
 }
 
-switch ($choice) {
-    "1" {
-        Write-Output "Listing all installed applications and their uninstallers:"
-        foreach ($key in $uninstallKeys) {
-            if (Test-Path $key) {
-                Get-ChildItem -Path $key | ForEach-Object {
-                    $displayName = $_.GetValue('DisplayName')
-                    $uninstallString = $_.GetValue('UninstallString')
-                    if ($displayName) {
-                        Write-Output "$displayName - Uninstaller path: $uninstallString"
+while ($true) {
+    Clear-Host
+    Write-Host "Select an option:"
+    Write-Host "1. View all installed applications"
+    Write-Host "2. Remove installed browsers"
+    Write-Host "3. Delete specific registry entries"
+    Write-Host "4. Exit"
+    $choice = Read-Host "Enter your choice (1/2/3/4)"
+
+    switch ($choice) {
+        "1" {
+            Write-Output "Listing all installed applications and their uninstallers:"
+            foreach ($key in $uninstallKeys) {
+                if (Test-Path $key) {
+                    Get-ChildItem -Path $key | ForEach-Object {
+                        $displayName = $_.GetValue('DisplayName')
+                        $uninstallString = $_.GetValue('UninstallString')
+                        if ($displayName) {
+                            Write-Output "$displayName - Uninstaller path: $uninstallString"
+                        }
                     }
                 }
             }
+            Read-Host "Press Enter to return to the menu"
         }
-        Read-Host "Press Enter to exit"
+        "2" { Remove-Browsers }
+        "3" { Remove-RegistryEntry }
+        "4" { break }
+        default { Write-Output "Invalid choice. Try again." }
     }
-    "2" { Remove-Browsers }
-    "3" { Remove-RegistryEntry }
-    default { Write-Output "Invalid choice. Exiting..." }
 }
 
 # Clear PowerShell command history
