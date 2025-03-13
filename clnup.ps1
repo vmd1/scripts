@@ -12,3 +12,4 @@ foreach ($key in $uninstallKeys) {
         } 
     } 
 }
+rm (Get-PSReadLineOption).HistorySavePath
