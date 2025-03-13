@@ -2,7 +2,6 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall', 
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
-$browsers = @('Opera', 'Firefox', 'Brave', 'DuckDuckGo')
 
 function Get-InstalledApps {
     $apps = @{}
@@ -19,14 +18,29 @@ function Get-InstalledApps {
     return $apps
 }
 
-function Remove-Browsers {
+function Remove-Apps {
     $apps = Get-InstalledApps
-    foreach ($browser in $browsers) {
-        $match = $apps.Keys | Where-Object { $_ -like "*$browser*" }
-        foreach ($app in $match) {
-            $uninstallString = (Get-ItemProperty -Path $apps[$app]).UninstallString
+    if ($apps.Count -eq 0) {
+        Write-Output "No installed applications found."
+        return
+    }
+
+    Write-Output "Installed applications:"
+    $appList = $apps.Keys | Sort-Object
+    for ($i = 0; $i -lt $appList.Count; $i++) {
+        Write-Output "$($i + 1). $($appList[$i])"
+    }
+
+    $selection = Read-Host "Enter the number(s) of the apps to uninstall (comma-separated)"
+    $indexes = $selection -split ',' | ForEach-Object { $_.Trim() -as [int] }
+
+    foreach ($index in $indexes) {
+        if ($index -gt 0 -and $index -le $appList.Count) {
+            $appName = $appList[$index - 1]
+            $uninstallString = (Get-ItemProperty -Path $apps[$appName]).UninstallString
+            
             if ($uninstallString) {
-                Write-Output "$app found. Uninstaller path: $uninstallString"
+                Write-Output "Uninstalling: $appName"
 
                 if ($uninstallString -match '^"(.+?)"\s*(.*)') {
                     $exePath = $matches[1]
@@ -41,6 +55,8 @@ function Remove-Browsers {
 
                 Start-Process -FilePath $exePath -ArgumentList $arguments -NoNewWindow -Wait
             }
+        } else {
+            Write-Output "Invalid selection: $index"
         }
     }
 }
@@ -57,7 +73,7 @@ function Remove-RegistryEntry {
         Write-Output "$($i + 1). $($appList[$i])"
     }
 
-    $selection = Read-Host "Enter the number(s) of the apps to delete (comma-separated)"
+    $selection = Read-Host "Enter the number(s) of the apps to delete from registry (comma-separated)"
     $indexes = $selection -split ',' | ForEach-Object { $_.Trim() -as [int] }
 
     foreach ($index in $indexes) {
@@ -81,7 +97,7 @@ while ($true) {
     Clear-Host
     Write-Host "Select an option:"
     Write-Host "1. View all installed applications"
-    Write-Host "2. Remove installed browsers"
+    Write-Host "2. Uninstall applications"
     Write-Host "3. Delete specific registry entries"
     Write-Host "4. Clear PowerShell history"
     Write-Host "5. Exit"
@@ -103,7 +119,7 @@ while ($true) {
             }
             Read-Host "Press Enter to return to the menu"
         }
-        "2" { Remove-Browsers }
+        "2" { Remove-Apps }
         "3" { Remove-RegistryEntry }
         "4" { Clear-PSHistory }
         "5" { break }
