@@ -206,7 +206,7 @@ function Set-RegistryUser {
     if (-not (Test-Path $_)) {
         Write-Output "Warning: Registry path $_ does not exist."
     }
-}
+    }
 
 
     $script:global:uninstallKeys = @(
