@@ -179,8 +179,10 @@ function Remove-AppxByName {
             $package = $packages[$index - 1]
             Write-Output "Removing: $($package.Name)"
             Remove-AppxPackage -Package $package.PackageFullName
+            Read-Host "Press Enter to return to the menu"
         } else {
             Write-Output "Invalid selection: $index"
+            Read-Host "Press Enter to return to the menu"
         }
     }
 }
