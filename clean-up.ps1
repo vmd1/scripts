@@ -225,7 +225,7 @@ while ($true) {
         "5" { Empty-RecycleBin }
         "6" { Get-AppxPackages }
         "7" { Remove-AppxByName }
-        "8" { break }
+        "8" { exit }
         "72" { Remove-RawRegistryEntries }
         default { Write-Output "Invalid choice. Try again." }
     }
