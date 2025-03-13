@@ -1,3 +1,5 @@
+# Script created by Vivaan Modi
+
 $uninstallKeys = @(
     'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall', 
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
@@ -105,6 +107,7 @@ function Empty-RecycleBin {
 
 while ($true) {
     Clear-Host
+    Write-Host "`n`n`n`n`nScript created by Vivaan Modi" -ForegroundColor Cyan
     Write-Host "Select an option:"
     Write-Host "1. View all installed applications"
     Write-Host "2. Uninstall applications"
