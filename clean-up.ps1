@@ -209,6 +209,12 @@ function Set-RegistryUser {
     Read-Host "Press Enter to return to the menu"
 }
 
+function Show-UninstallKeys {
+    Write-Output "Current uninstall registry locations:"
+    $uninstallKeys | ForEach-Object { Write-Output $_ }
+    Read-Host "Press Enter to return to the menu"
+}
+
 while ($true) {
     Clear-Host
     Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
@@ -253,6 +259,7 @@ while ($true) {
             Set-RegistryUser -username $username
         }
         "72" { Remove-RawRegistryEntries }
+        "73" { Show-UninstallKeys }
         default { Write-Output "Invalid choice. Try again." }
     }
 }
