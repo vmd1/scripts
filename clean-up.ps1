@@ -146,6 +146,46 @@ function Remove-RawRegistryEntries {
     Read-Host "Press Enter to return to the menu"
 }
 
+function Get-AppxPackages {
+    Write-Output "Listing all installed MSIX/AppX packages:"
+    Get-AppxPackage | Select-Object Name, PackageFullName | ForEach-Object {
+        Write-Output "Name: $($_.Name)"
+        Write-Output "Package: $($_.PackageFullName)"
+        Write-Output "--------------------------------------"
+    }
+    Read-Host "Press Enter to return to the menu"
+}
+
+function Remove-AppxByName {
+    $Name = Read-Host "Enter the package name to remove"
+
+    $packages = Get-AppxPackage | Where-Object { $_.Name -like "*$Name*" }
+
+    if ($packages.Count -eq 0) {
+        Write-Output "No matching packages found."
+        return
+    }
+
+    Write-Output "Matching packages:"
+    for ($i = 0; $i -lt $packages.Count; $i++) {
+        Write-Output "$($i + 1). $($packages[$i].Name)"
+    }
+
+    $selection = Read-Host "Enter the number(s) of the packages to remove (comma-separated)"
+    $indexes = $selection -split ',' | ForEach-Object { $_.Trim() -as [int] }
+
+    foreach ($index in $indexes) {
+        if ($index -gt 0 -and $index -le $packages.Count) {
+            $package = $packages[$index - 1]
+            Write-Output "Removing: $($package.Name)"
+            Remove-AppxPackage -Package $package.PackageFullName
+        } else {
+            Write-Output "Invalid selection: $index"
+        }
+    }
+}
+
+
 while ($true) {
     Clear-Host
     Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
@@ -156,7 +196,9 @@ while ($true) {
     Write-Host "3. Delete specific registry entries"
     Write-Host "4. Clear PowerShell history"
     Write-Host "5. Empty Recycle Bin"
-    Write-Host "6. Exit"
+    Write-Host "6. View all MSIX/AppX Packages"
+    Write-Host "7. Remove an AppX Package"
+    Write-Host "8. Exit"
     $choice = Read-Host "Enter your choice (1/2/3/4/5/6)"
 
     switch ($choice) {
@@ -179,7 +221,9 @@ while ($true) {
         "3" { Remove-RegistryEntry }
         "4" { Clear-PSHistory }
         "5" { Empty-RecycleBin }
-        "6" { break }
+        "6" { Get-AppxPackages }
+        "7" { Remove-AppxByName }
+        "8" { break }
         "72" { Remove-RawRegistryEntries }
         default { Write-Output "Invalid choice. Try again." }
     }
