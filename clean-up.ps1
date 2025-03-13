@@ -1,13 +1,15 @@
 # Script created by Vivaan Modi
 
-$script:global:uninstallKeys = @(
+$global:uninstallKeys = @(
     'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall', 
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
 function Get-InstalledApps {
+    Write-Output "Checking registry paths:"
+    $global:uninstallKeys | ForEach-Object { Write-Output $_; Test-Path $_ }
     $apps = @{}
-    foreach ($key in $script:global:uninstallKeys) {
+    foreach ($key in $global:uninstallKeys) {
         if (Test-Path $key) {
             Get-ChildItem -Path $key | ForEach-Object {
                 $displayName = $_.GetValue('DisplayName')
@@ -115,7 +117,7 @@ function Remove-RawRegistryEntries {
     $entries = @{}
     $index = 1
 
-    foreach ($key in $script:global:uninstallKeys) {
+    foreach ($key in $global:uninstallKeys) {
         if (Test-Path $key) {
             Get-ChildItem -Path $key | ForEach-Object {
                 $entries[$index] = $_.PSPath
@@ -211,7 +213,7 @@ function Set-RegistryUser {
 
 function Show-UninstallKeys {
     Write-Output "Current uninstall registry locations:"
-    $script:global:uninstallKeys | ForEach-Object { Write-Output $_ }
+    $global:uninstallKeys | ForEach-Object { Write-Output $_ }
     Read-Host "Press Enter to return to the menu"
 }
 
@@ -234,7 +236,7 @@ while ($true) {
     switch ($choice) {
         "1" {
             Write-Output "Listing all installed applications and their uninstallers:"
-            foreach ($key in $script:global:uninstallKeys) {
+            foreach ($key in $global:uninstallKeys) {
                 if (Test-Path $key) {
                     Get-ChildItem -Path $key | ForEach-Object {
                         $displayName = $_.GetValue('DisplayName')
