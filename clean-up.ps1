@@ -202,7 +202,7 @@ while ($true) {
     Write-Host "6. View all MSIX/AppX Packages"
     Write-Host "7. Remove an AppX Package"
     Write-Host "8. Exit"
-    $choice = Read-Host "Enter your choice (1/2/3/4/5/6)"
+    $choice = Read-Host "Enter your choice (1/2/3/4/5/6/7/8)"
 
     switch ($choice) {
         "1" {
