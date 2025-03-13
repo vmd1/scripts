@@ -191,6 +191,7 @@ function Remove-AppxByName {
 while ($true) {
     Clear-Host
     Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
+    Write-Host "Disclaimer: This program comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law." -ForegroundColor Cyan
 
     Write-Host "Select an option:"
     Write-Host "1. View all installed applications"
