@@ -7,9 +7,9 @@ foreach ($key in $uninstallKeys) {
             $uninstallString = $_.GetValue('UninstallString'); 
             if ($displayName -and ($browsers | Where-Object { $displayName -like "*$_*" }) -and $uninstallString) { 
                 Write-Output "$displayName found. Uninstaller path: $uninstallString"; 
-                # Removing quotes if they exist
+                # Remove surrounding quotes if present and ensure proper path handling
                 $uninstallString = $uninstallString.Trim('"') 
-                Start-Process -FilePath $uninstallString -Wait 
+                Start-Process -FilePath $uninstallString -Wait
             } 
         } 
     } 
