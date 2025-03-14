@@ -106,7 +106,7 @@ foreach ($key in $uninstallKeys) {
             $displayName = $_.GetValue('DisplayName')
             $uninstallString = $_.GetValue('UninstallString')
             if ($displayName) {
-                Write-Output "$displayName"
+                Write-Host "$displayName" -ForegroundColor Red
             }
         }
     }
