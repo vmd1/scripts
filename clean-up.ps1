@@ -5,18 +5,6 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
-$darkModeStatus = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -ErrorAction SilentlyContinue
-$settings = @{ "DarkMode" = if ($darkModeStatus.AppsUseLightTheme -eq 0) { $true } else { $false } }
-
-function Toggle-DarkMode {
-    $settings["DarkMode"] = -not $settings["DarkMode"]
-    $mode = if ($settings["DarkMode"]) { 0 } else { 1 }
-    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Value $mode
-    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme" -Value $mode
-    Write-Output "Dark mode toggled to: $($settings["DarkMode"])"
-    Read-Host "Press Enter to return to the menu"
-}
-
 function Get-InstalledApps {
     $apps = @{}
     foreach ($key in $uninstallKeys) {
@@ -244,21 +232,7 @@ while ($true) {
         "4" { Empty-RecycleBin }
         "5" { Get-AppxPackages }
         "6" { Remove-AppxByName }
-        "7" {
-            while ($true) {
-                Clear-Host
-                Write-Host "Toggle Settings Menu"
-                Write-Host "1. Toggle Dark Mode (Currently: $($settings["DarkMode"]))"
-                Write-Host "2. Back to Main Menu"
-                $toggleChoice = Read-Host "Enter your choice (1/2)"
-                switch ($toggleChoice) {
-                    "1" { Toggle-DarkMode }
-                    "2" { break }
-                    default { Write-Output "Invalid choice. Try again." }
-                }
-            }
-        }
-        "8" { Exit-Script }
+        "7" { Exit-Script }
         "72" { Remove-RawRegistryEntries }
         default { Write-Output "Invalid choice. Try again." }
     }
