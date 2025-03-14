@@ -58,6 +58,22 @@ function Uninstall-Firefox-AppX {
     }
 }
 
+function Remove-App-Paths {
+    $pathsToRemove = @(
+        "$env:LOCALAPPDATA\Mozilla\Firefox",
+        "$env:LOCALAPPDATA\Opera Software",
+        "$env:APPDATA\Opera Software",
+        "$env:LOCALAPPDATA\Programs\Opera"
+    )
+    
+    foreach ($path in $pathsToRemove) {
+        if (Test-Path $path) {
+            Write-Output "Removing path: $path"
+            Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
+}
+
 function Unattended-Uninstall {
     $installedApps = Get-InstalledApps
     foreach ($app in $targetApps) {
@@ -69,6 +85,7 @@ function Unattended-Uninstall {
         }
     }
     Uninstall-Firefox-AppX
+    Remove-App-Paths
 }
 
 Unattended-Uninstall
