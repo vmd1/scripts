@@ -5,6 +5,30 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
+$settings = @{ "Animations" = $true; "Taskbar" = $true; "DarkMode" = $true }
+
+function Toggle-Animations {
+    $settings["Animations"] = -not $settings["Animations"]
+    Write-Output "Animations toggled to: $($settings["Animations"])"
+    Read-Host "Press Enter to return to the menu"
+}
+
+function Toggle-Taskbar {
+    $settings["Taskbar"] = -not $settings["Taskbar"]
+    $visibility = if ($settings["Taskbar"]) { 1 } else { 0 }
+    powershell -command "&{$w=New-Object -ComObject shell.application; $w.ToggleDesktop()}"
+    Write-Output "Taskbar visibility toggled to: $($settings["Taskbar"])"
+    Read-Host "Press Enter to return to the menu"
+}
+
+function Toggle-DarkMode {
+    $settings["DarkMode"] = -not $settings["DarkMode"]
+    $mode = if ($settings["DarkMode"]) { 0 } else { 1 }
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Value $mode
+    Write-Output "Dark mode toggled to: $($settings["DarkMode"])"
+    Read-Host "Press Enter to return to the menu"
+}
+
 function Get-InstalledApps {
     $apps = @{}
     foreach ($key in $uninstallKeys) {
