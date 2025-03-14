@@ -92,3 +92,17 @@ Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
 Write-Host "Disclaimer: This program comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law." -ForegroundColor Cyan
 Write-Host "Beginning Unattended Uninstall" -ForegroundColor Green
 Unattended-Uninstall
+Write-Host "Completed Unattended Uninstall" -ForegroundColor Red
+Write-Host "If there were any errors in console, please ignore them" -ForegroundColor Red
+Write-Host "Please confirm there are no prohibited apps listed below:" -ForegroundColor Green
+foreach ($key in $uninstallKeys) {
+    if (Test-Path $key) {
+        Get-ChildItem -Path $key | ForEach-Object {
+            $displayName = $_.GetValue('DisplayName')
+            $uninstallString = $_.GetValue('UninstallString')
+            if ($displayName) {
+                Write-Output "$displayName - Uninstaller path: $uninstallString"
+            }
+        }
+    }
+}
