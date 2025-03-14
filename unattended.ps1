@@ -5,7 +5,7 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
-$targetApps = @("Mozilla Firefox", "Opera", "Brave", "Zen", "Roblox Player", "Roblox Studio", "Spotify", "Lively Wallpaper", "Ecosia", "AVG Secure Browser", "Avast", "Vivaldi", "Waterfox", "Maxthon")
+$targetApps = @("Opera GX", "Mozilla Firefox", "Opera", "Brave", "Zen", "Roblox Player", "Roblox Studio", "Spotify", "Lively Wallpaper", "Ecosia", "AVG Secure Browser", "Avast", "Vivaldi", "Waterfox", "Maxthon")
 $targetAppX = @("Spotify", "Mozilla.Firefox", "DuckDuckGo")
 
 function Get-InstalledApps {
