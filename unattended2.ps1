@@ -22,8 +22,10 @@ function Get-InstalledApp($appName) {
 function Uninstall-App($appName) {
     $appRegPath = Get-InstalledApp $appName
     if ($appRegPath) {
-        $uninstallString = (Get-ItemProperty -Path $appRegPath).UninstallString
-        if ($uninstallString) {
+        Write-Output "Found registry path: $appRegPath"
+        $appProperties = Get-ItemProperty -Path $appRegPath -ErrorAction SilentlyContinue
+        if ($appProperties -and $appProperties.UninstallString) {
+            $uninstallString = $appProperties.UninstallString
             Write-Output "Uninstalling: $appName"
             if ($uninstallString -match '^"(.+?)"\s*(.*)') {
                 $exePath = $matches[1]
@@ -41,7 +43,11 @@ function Uninstall-App($appName) {
                 Write-Output "Uninstaller not found. Deleting registry entry."
                 Remove-Item -Path $appRegPath -Recurse -Force
             }
+        } else {
+            Write-Output "No uninstall string found for: $appName"
         }
+    } else {
+        Write-Output "$appName not found in registry."
     }
 }
 
