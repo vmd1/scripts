@@ -11,6 +11,7 @@ function Toggle-DarkMode {
     $settings["DarkMode"] = -not $settings["DarkMode"]
     $mode = if ($settings["DarkMode"]) { 0 } else { 1 }
     Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Value $mode
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme" -Value $mode
     Write-Output "Dark mode toggled to: $($settings["DarkMode"])"
     Read-Host "Press Enter to return to the menu"
 }
