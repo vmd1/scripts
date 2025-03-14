@@ -5,7 +5,7 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
-$targetApps = @("Mozilla Firefox", "Opera")
+$targetApps = @("Mozilla Firefox", "Opera", "Brave")
 
 function Get-InstalledApps {
     $apps = @{ }
@@ -50,11 +50,14 @@ function Uninstall-App {
     }
 }
 
-function Uninstall-Firefox-AppX {
-    $firefoxPackage = Get-AppxPackage | Where-Object { $_.Name -like "*Mozilla.Firefox*" }
-    if ($firefoxPackage) {
-        Write-Output "Removing Firefox AppX package: $($firefoxPackage.Name)"
-        Remove-AppxPackage -Package $firefoxPackage.PackageFullName
+function Uninstall-AppX {
+    param(
+        [string]$appxName
+    )
+    $appxPackage = Get-AppxPackage | Where-Object { $_.Name -like "*$appxName*" }
+    if ($appxPackage) {
+        Write-Output "Removing AppX package: $($appxPackage.Name)"
+        Remove-AppxPackage -Package $appxPackage.PackageFullName
     }
 }
 
@@ -84,7 +87,8 @@ function Unattended-Uninstall {
             Uninstall-App -appName $matchingApp -uninstallString $uninstallString -regPath $regPath
         }
     }
-    Uninstall-Firefox-AppX
+    Uninstall-AppX "Mozilla.Firefox"
+    Uninstall-AppX "DuckDuckGo"
     Remove-App-Paths
 }
 
