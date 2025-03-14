@@ -103,6 +103,11 @@ function Clear-PSHistory {
     Read-Host "Press Enter to return to the menu"
 }
 
+function Exit-Script {
+    rm (Get-PSReadLineOption).HistorySavePath
+    exit
+}
+
 function Empty-RecycleBin {
     try {
         [void] [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
@@ -191,7 +196,6 @@ function Remove-AppxByName {
 }
 
 while ($true) {
-    rm (Get-PSReadLineOption).HistorySavePath
     Clear-Host
     Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
     Write-Host "Disclaimer: This program comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law." -ForegroundColor Cyan
@@ -200,11 +204,10 @@ while ($true) {
     Write-Host "1. View all installed applications"
     Write-Host "2. Uninstall applications"
     Write-Host "3. Delete specific registry entries"
-    Write-Host "4. Clear PowerShell history"
-    Write-Host "5. Empty Recycle Bin"
-    Write-Host "6. View all MSIX/AppX Packages"
-    Write-Host "7. Remove an AppX Package"
-    Write-Host "8. Exit"
+    Write-Host "4. Empty Recycle Bin"
+    Write-Host "5. View all MSIX/AppX Packages"
+    Write-Host "6. Remove an AppX Package"
+    Write-Host "7. Exit"
     $choice = Read-Host "Enter your choice (1/2/3/4/5/6/7/8)"
 
     switch ($choice) {
@@ -225,11 +228,10 @@ while ($true) {
         }
         "2" { Remove-Apps }
         "3" { Remove-RegistryEntry }
-        "4" { Clear-PSHistory }
-        "5" { Empty-RecycleBin }
-        "6" { Get-AppxPackages }
-        "7" { Remove-AppxByName }
-        "8" { exit }
+        "4" { Empty-RecycleBin }
+        "5" { Get-AppxPackages }
+        "6" { Remove-AppxByName }
+        "7" { exit }
         "72" { Remove-RawRegistryEntries }
         default { Write-Output "Invalid choice. Try again." }
     }
