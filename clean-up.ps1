@@ -5,7 +5,8 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
-$settings = @{ "DarkMode" = $true }
+$darkModeStatus = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -ErrorAction SilentlyContinue
+$settings = @{ "DarkMode" = if ($darkModeStatus.AppsUseLightTheme -eq 0) { $true } else { $false } }
 
 function Toggle-DarkMode {
     $settings["DarkMode"] = -not $settings["DarkMode"]
