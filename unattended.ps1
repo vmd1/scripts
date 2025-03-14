@@ -5,7 +5,8 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
-$targetApps = @("Mozilla Firefox", "Opera", "Brave", "Zen", "Roblox Player", "Roblox Studio", "Spotify", "Lively Wallpaper")
+$targetApps = @("Mozilla Firefox", "Opera", "Brave", "Zen", "Roblox Player", "Roblox Studio", "Spotify", "Lively Wallpaper", "Ecosia", "AVG Secure Browser", "Avast", "Vivaldi", "Waterfox", "Maxthon")
+$targetAppX = @("Spotify", "Mozilla.Firefox", "DuckDuckGo")
 
 function Get-InstalledApps {
     $apps = @{ }
@@ -67,6 +68,15 @@ function Remove-App-Paths {
         "$env:LOCALAPPDATA\Opera Software",
         "$env:APPDATA\Opera Software",
         "$env:LOCALAPPDATA\Programs\Opera"
+        "$env:LOCALAPPDATA\BraveSoftware\Brave-Browser",
+        "$env:LOCALAPPDATA\Vivaldi",
+        "$env:LOCALAPPDATA\Waterfox",
+        "$env:LOCALAPPDATA\Maxthon",
+        "$env:LOCALAPPDATA\Ecosia",
+        "$env:LOCALAPPDATA\ZenBrowser",
+        "$env:LOCALAPPDATA\Roblox\Versions",
+        "$env:APPDATA\Spotify",
+        "$env:LOCALAPPDATA\Microsoft\WindowsApps\Spotify.exe"
     )
     
     foreach ($path in $pathsToRemove) {
@@ -87,9 +97,9 @@ function Unattended-Uninstall {
             Uninstall-App -appName $matchingApp -uninstallString $uninstallString -regPath $regPath
         }
     }
-    Uninstall-AppX "Mozilla.Firefox"
-    Uninstall-AppX "DuckDuckGo"
-    Uninstall-AppX "Spotify"
+    foreach ($appX in $targetAppX) {
+        Uninstall-AppX $appX
+    }
     Remove-App-Paths
 }
 
