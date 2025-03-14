@@ -94,7 +94,7 @@ Write-Host "Beginning Unattended Uninstall" -ForegroundColor Green
 Unattended-Uninstall
 Write-Host "Completed Unattended Uninstall" -ForegroundColor Red
 Write-Host "If there were any errors in console, please ignore them" -ForegroundColor Red
-Write-Host "Please confirm there are no prohibited apps listed below:" -ForegroundColor Green
+Write-Host "Please confirm there are no prohibited apps listed below:" -ForegroundColor Yellow
 foreach ($key in $uninstallKeys) {
     if (Test-Path $key) {
         Get-ChildItem -Path $key | ForEach-Object {
