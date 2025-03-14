@@ -61,10 +61,11 @@ function Uninstall-Firefox-AppX {
 function Unattended-Uninstall {
     $installedApps = Get-InstalledApps
     foreach ($app in $targetApps) {
-        if ($installedApps.ContainsKey($app)) {
-            $uninstallString = $installedApps[$app].Uninstall
-            $regPath = $installedApps[$app].Path
-            Uninstall-App -appName $app -uninstallString $uninstallString -regPath $regPath
+        $matchingApp = $installedApps.Keys | Where-Object { $_ -like "*$app*" }
+        if ($matchingApp) {
+            $uninstallString = $installedApps[$matchingApp].Uninstall
+            $regPath = $installedApps[$matchingApp].Path
+            Uninstall-App -appName $matchingApp -uninstallString $uninstallString -regPath $regPath
         }
     }
     Uninstall-Firefox-AppX
