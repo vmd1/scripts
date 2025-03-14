@@ -231,7 +231,8 @@ while ($true) {
     Write-Host "4. Empty Recycle Bin"
     Write-Host "5. View all MSIX/AppX Packages"
     Write-Host "6. Remove an AppX Package"
-    Write-Host "7. Exit"
+    Write-Host "7. Toggle Personalisation Settings"
+    Write-Host "8. Exit"
     $choice = Read-Host "Enter your choice (1/2/3/4/5/6/7/8)"
 
     switch ($choice) {
@@ -255,7 +256,25 @@ while ($true) {
         "4" { Empty-RecycleBin }
         "5" { Get-AppxPackages }
         "6" { Remove-AppxByName }
-        "7" { Exit-Script }
+        "7" {
+            while ($true) {
+                Clear-Host
+                Write-Host "Toggle Settings Menu"
+                Write-Host "1. Toggle Animations (Currently: $($settings["Animations"]))"
+                Write-Host "2. Toggle Taskbar Visibility (Currently: $($settings["Taskbar"]))"
+                Write-Host "3. Toggle Dark Mode (Currently: $($settings["DarkMode"]))"
+                Write-Host "4. Back to Main Menu"
+                $toggleChoice = Read-Host "Enter your choice (1/2/3/4)"
+                switch ($toggleChoice) {
+                    "1" { Toggle-Animations }
+                    "2" { Toggle-Taskbar }
+                    "3" { Toggle-DarkMode }
+                    "4" { break }
+                    default { Write-Output "Invalid choice. Try again." }
+                }
+            }
+        }
+        "8" { Exit-Script }
         "72" { Remove-RawRegistryEntries }
         default { Write-Output "Invalid choice. Try again." }
     }
