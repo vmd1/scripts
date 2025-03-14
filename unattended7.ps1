@@ -88,4 +88,7 @@ function Unattended-Uninstall {
     Remove-App-Paths
 }
 
+Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
+Write-Host "Disclaimer: This program comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law." -ForegroundColor Cyan
+Write-Host "Beginning Unattended Uninstall" -ForegroundColor Green
 Unattended-Uninstall
