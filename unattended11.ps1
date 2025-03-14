@@ -5,7 +5,7 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
-$targetApps = @("Mozilla Firefox", "Opera", "Brave")
+$targetApps = @("Mozilla Firefox", "Opera", "Brave", "Zen", "Roblox Player", "Roblox Studio", "Spotify", "Lively Wallpaper")
 
 function Get-InstalledApps {
     $apps = @{ }
@@ -89,6 +89,7 @@ function Unattended-Uninstall {
     }
     Uninstall-AppX "Mozilla.Firefox"
     Uninstall-AppX "DuckDuckGo"
+    Uninstall-AppX "Spotify"
     Remove-App-Paths
 }
 
@@ -96,9 +97,9 @@ Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
 Write-Host "Disclaimer: This program comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law." -ForegroundColor Cyan
 Write-Host "Beginning Unattended Uninstall" -ForegroundColor Green
 Unattended-Uninstall
-Write-Host "Completed Unattended Uninstall" -ForegroundColor Red
-Write-Host "If there were any errors in console, please ignore them" -ForegroundColor Red
-Write-Host "Please confirm there are no prohibited apps listed below:" -ForegroundColor Yellow
+Write-Host "Completed Unattended Uninstall" -ForegroundColor Yellow
+Write-Host "If there were any errors in console, please ignore them" -ForegroundColor Yellow
+Write-Host "Please confirm there are no prohibited apps listed below:" -ForegroundColor Red
 foreach ($key in $uninstallKeys) {
     if (Test-Path $key) {
         Get-ChildItem -Path $key | ForEach-Object {
