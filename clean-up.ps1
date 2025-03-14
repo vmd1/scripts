@@ -55,8 +55,11 @@ function Remove-Apps {
                     $exePath = $uninstallString
                     $arguments = ""
                 }
-
-                Start-Process -FilePath $exePath -ArgumentList $arguments -NoNewWindow -Wait
+                if ($arguments) {
+                    Start-Process -FilePath $exePath -ArgumentList $arguments -NoNewWindow -Wait
+                } else {
+                    Start-Process -FilePath $exePath -NoNewWindow -Wait
+                }
             }
         } else {
             Write-Output "Invalid selection: $index"
