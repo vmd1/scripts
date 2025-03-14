@@ -5,21 +5,7 @@ $uninstallKeys = @(
     'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 )
 
-$settings = @{ "Animations" = $true; "Taskbar" = $true; "DarkMode" = $true }
-
-function Toggle-Animations {
-    $settings["Animations"] = -not $settings["Animations"]
-    Write-Output "Animations toggled to: $($settings["Animations"])"
-    Read-Host "Press Enter to return to the menu"
-}
-
-function Toggle-Taskbar {
-    $settings["Taskbar"] = -not $settings["Taskbar"]
-    $visibility = if ($settings["Taskbar"]) { 1 } else { 0 }
-    powershell -command "&{$w=New-Object -ComObject shell.application; $w.ToggleDesktop()}"
-    Write-Output "Taskbar visibility toggled to: $($settings["Taskbar"])"
-    Read-Host "Press Enter to return to the menu"
-}
+$settings = @{ "DarkMode" = $true }
 
 function Toggle-DarkMode {
     $settings["DarkMode"] = -not $settings["DarkMode"]
@@ -260,16 +246,12 @@ while ($true) {
             while ($true) {
                 Clear-Host
                 Write-Host "Toggle Settings Menu"
-                Write-Host "1. Toggle Animations (Currently: $($settings["Animations"]))"
-                Write-Host "2. Toggle Taskbar Visibility (Currently: $($settings["Taskbar"]))"
-                Write-Host "3. Toggle Dark Mode (Currently: $($settings["DarkMode"]))"
-                Write-Host "4. Back to Main Menu"
-                $toggleChoice = Read-Host "Enter your choice (1/2/3/4)"
+                Write-Host "1. Toggle Dark Mode (Currently: $($settings["DarkMode"]))"
+                Write-Host "2. Back to Main Menu"
+                $toggleChoice = Read-Host "Enter your choice (1/2)"
                 switch ($toggleChoice) {
-                    "1" { Toggle-Animations }
-                    "2" { Toggle-Taskbar }
-                    "3" { Toggle-DarkMode }
-                    "4" { break }
+                    "1" { Toggle-DarkMode }
+                    "2" { break }
                     default { Write-Output "Invalid choice. Try again." }
                 }
             }
