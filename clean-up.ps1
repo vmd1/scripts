@@ -289,12 +289,12 @@ function Check-APIReachability {
         try {
             $pingResult = Test-Connection -ComputerName $api -Count 1 -Quiet
             if ($pingResult) {
-                Write-Output "$apiName: ✔"
+                Write-Output "${apiName}: ✔"
             } else {
-                Write-Output "$apiName: ❌"
+                Write-Output "${apiName}: ❌"
             }
         } catch {
-            Write-Output "$apiName: ❌"
+            Write-Output "${apiName}: ❌"
         }
     }
     Read-Host "Press Enter to return to the menu"
