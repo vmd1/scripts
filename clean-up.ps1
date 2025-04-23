@@ -217,6 +217,70 @@ function View-AppLockerPolicies {
     Read-Host "Press Enter to return to the menu"
 }
 
+function Enable-Proxy {
+    $subChoice = ""
+    while ($subChoice -ne "3") {
+        Clear-Host
+        Write-Host "Proxy Configuration" -ForegroundColor Cyan
+        Write-Host "1. Enable Proxy"
+        Write-Host "2. Set Proxy Address"
+        Write-Host "3. Go Back"
+        $subChoice = Read-Host "Enter your choice (1/2/3)"
+
+        switch ($subChoice) {
+            "1" {
+                $proxyEnabled = Read-Host "Do you want to enable the proxy? (Y/N)"
+                if ($proxyEnabled -eq "Y") {
+                    $proxyAddress = Read-Host "Enter the proxy address (e.g., http://proxyserver:8080)"
+                    $proxyEnabled = 1
+                } else {
+                    $proxyAddress = ""
+                    $proxyEnabled = 0
+                }
+
+                # Set the proxy settings in the registry
+                $proxyRegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings"
+                Set-ItemProperty -Path $proxyRegPath -Name ProxyEnable -Value $proxyEnabled
+                Set-ItemProperty -Path $proxyRegPath -Name ProxyServer -Value $proxyAddress
+
+                if ($proxyEnabled -eq 1) {
+                    Write-Output "Proxy has been enabled with address: $proxyAddress"
+                } else {
+                    Write-Output "Proxy has been disabled."
+                }
+            }
+            "2" {
+                $proxyAddress = Read-Host "Enter the new proxy address (e.g., http://proxyserver:8080)"
+                Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name ProxyServer -Value $proxyAddress
+                Write-Output "Proxy address has been set to $proxyAddress"
+            }
+            "3" {
+                Write-Output "Returning to main menu..."
+            }
+            default {
+                Write-Output "Invalid choice. Try again."
+            }
+        }
+        Read-Host "Press Enter to continue"
+    }
+}
+
+# Function to check if ndns is being used
+function Check-NDNS {
+    $ndnsHost = "ndns.infra.mdi"
+    try {
+        $pingResult = Test-Connection -ComputerName $ndnsHost -Count 1 -Quiet
+        if ($pingResult) {
+            Write-Output "ndns.infra.mdi is reachable, ndns is being used."
+        } else {
+            Write-Output "ndns.infra.mdi is not reachable, ndns is not being used."
+        }
+    } catch {
+        Write-Output "Error pinging ndns.infra.mdi: $_"
+    }
+    Read-Host "Press Enter to return to the menu"
+}
+
 while ($true) {
     Clear-Host
     Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
@@ -231,7 +295,9 @@ while ($true) {
     Write-Host "6. Remove an AppX Package"
     Write-Host "7. Exit"
     Write-Host "8. View AppLocker Policies"
-    $choice = Read-Host -Prompt (Write-Host "Enter your choice (1/2/3/4/5/6/7/8)" -ForegroundColor Green)
+    Write-Host "9. Proxy Configuration"
+    Write-Host "10. Check if ndns is being used"
+    $choice = Read-Host -Prompt (Write-Host "Enter your choice (1/2/3/4/5/6/7/8/9/10)" -ForegroundColor Green)
 
     switch ($choice) {
         "1" {
@@ -241,22 +307,41 @@ while ($true) {
                     Get-ChildItem -Path $key | ForEach-Object {
                         $displayName = $_.GetValue('DisplayName')
                         $uninstallString = $_.GetValue('UninstallString')
-                        if ($displayName) {
-                            Write-Output "$displayName - Uninstaller path: $uninstallString"
-                        }
+                        Write-Output "Name: $displayName"
+                        Write-Output "Uninstall Command: $uninstallString"
                     }
                 }
             }
-            Read-Host "Press Enter to return to the menu"
         }
-        "2" { Remove-Apps }
-        "3" { Remove-RegistryEntry }
-        "4" { Empty-RecycleBin }
-        "5" { Get-AppxPackages }
-        "6" { Remove-AppxByName }
-        "7" { Exit-Script }
-        "8" { View-AppLockerPolicies }
-        "72" { Remove-RawRegistryEntries }
-        default { Write-Output "Invalid choice. Try again." }
+        "2" {
+            Remove-Apps
+        }
+        "3" {
+            Remove-RegistryEntry
+        }
+        "4" {
+            Empty-RecycleBin
+        }
+        "5" {
+            Get-AppxPackages
+        }
+        "6" {
+            Remove-AppxByName
+        }
+        "7" {
+            Exit-Script
+        }
+        "8" {
+            View-AppLockerPolicies
+        }
+        "9" {
+            Enable-Proxy
+        }
+        "10" {
+            Check-NDNS
+        }
+        default {
+            Write-Output "Invalid choice. Please select a valid option."
+        }
     }
 }
