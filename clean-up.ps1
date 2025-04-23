@@ -290,10 +290,10 @@ while ($true) {
     Write-Host "4. Empty Recycle Bin"
     Write-Host "5. View all MSIX/AppX Packages"
     Write-Host "6. Remove an AppX Package"
-    Write-Host "7. Exit"
-    Write-Host "8. View AppLocker Policies"
-    Write-Host "9. Proxy Configuration"
-    Write-Host "10. Check if ndns is being used"
+    Write-Host "7. View AppLocker Policies"
+    Write-Host "8. Proxy Configuration"
+    Write-Host "9. Check if ndns is being used"
+    Write-Host "10. Exit"
     $choice = Read-Host -Prompt (Write-Host "Enter your choice (1/2/3/4/5/6/7/8/9/10)" -ForegroundColor Green)
 
     switch ($choice) {
@@ -325,16 +325,16 @@ while ($true) {
         "6" {
             Remove-AppxByName
         }
-        "7" {
+        "10" {
             Exit-Script
         }
-        "8" {
+        "7" {
             View-AppLockerPolicies
         }
-        "9" {
+        "8" {
             Enable-Proxy
         }
-        "10" {
+        "9" {
             Check-NDNS
         }
         default {
