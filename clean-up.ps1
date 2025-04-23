@@ -278,6 +278,28 @@ function Check-NDNS {
     Read-Host "Press Enter to return to the menu"
 }
 
+function Check-APIReachability {
+    $apis = @{
+        "Senso" = "api.senso.cloud"
+        "Smoothwall" = "yodz0y52yvzq3z058xjuqag9pywqc4ma-mms.smoothwall.cloud"
+    }
+
+    foreach ($apiName in $apis.Keys) {
+        $api = $apis[$apiName]
+        try {
+            $pingResult = Test-Connection -ComputerName $api -Count 1 -Quiet
+            if ($pingResult) {
+                Write-Output "$apiName: ✔"
+            } else {
+                Write-Output "$apiName: ❌"
+            }
+        } catch {
+            Write-Output "$apiName: ❌"
+        }
+    }
+    Read-Host "Press Enter to return to the menu"
+}
+
 while ($true) {
     Clear-Host
     Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
@@ -293,7 +315,8 @@ while ($true) {
     Write-Host "7. View AppLocker Policies"
     Write-Host "8. Proxy Configuration"
     Write-Host "9. Check if ndns is being used"
-    Write-Host "10. Exit"
+    Write-Host "10. Check if Senso and Smoothwall endpoints are accessible"
+    Write-Host "11. Exit"
     $choice = Read-Host -Prompt (Write-Host "Enter your choice (1/2/3/4/5/6/7/8/9/10)" -ForegroundColor Green)
 
     switch ($choice) {
@@ -325,7 +348,7 @@ while ($true) {
         "6" {
             Remove-AppxByName
         }
-        "10" {
+        "11" {
             Exit-Script
         }
         "7" {
@@ -336,6 +359,9 @@ while ($true) {
         }
         "9" {
             Check-NDNS
+        }
+        "10" {
+            Check-APIReachability
         }
         default {
             Write-Output "Invalid choice. Please select a valid option."
