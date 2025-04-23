@@ -195,6 +195,28 @@ function Remove-AppxByName {
     }
 }
 
+function View-AppLockerPolicies {
+    Write-Output "Fetching AppLocker policies from configuration files..."
+    
+    $appLockerPath = "C:\Windows\System32\AppLocker\*"
+    $files = Get-ChildItem -Path $appLockerPath -Recurse -File
+
+    if ($files.Count -eq 0) {
+        Write-Output "No AppLocker policy files found."
+    } else {
+        foreach ($file in $files) {
+            Write-Output "`n--- File: $($file.FullName) ---"
+            try {
+                Get-Content -Path $file.FullName
+            } catch {
+                Write-Output "Could not read file: $($file.FullName)"
+            }
+        }
+    }
+
+    Read-Host "Press Enter to return to the menu"
+}
+
 while ($true) {
     Clear-Host
     Write-Host "Script created by Vivaan Modi" -ForegroundColor Cyan
@@ -208,7 +230,8 @@ while ($true) {
     Write-Host "5. View all MSIX/AppX Packages"
     Write-Host "6. Remove an AppX Package"
     Write-Host "7. Exit"
-    $choice = Read-Host -Prompt (Write-Host "Enter your choice (1/2/3/4/5/6/7)" -ForegroundColor Green)
+    Write-Host "8. View AppLocker Policies"
+    $choice = Read-Host -Prompt (Write-Host "Enter your choice (1/2/3/4/5/6/7/8)" -ForegroundColor Green)
 
     switch ($choice) {
         "1" {
@@ -232,6 +255,7 @@ while ($true) {
         "5" { Get-AppxPackages }
         "6" { Remove-AppxByName }
         "7" { Exit-Script }
+        "8" { View-AppLockerPolicies }
         "72" { Remove-RawRegistryEntries }
         default { Write-Output "Invalid choice. Try again." }
     }
