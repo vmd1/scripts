@@ -231,20 +231,17 @@ function Enable-Proxy {
             "1" {
                 $proxyEnabled = Read-Host "Do you want to enable the proxy? (Y/N)"
                 if ($proxyEnabled -eq "Y") {
-                    $proxyAddress = Read-Host "Enter the proxy address (e.g., http://proxyserver:8080)"
                     $proxyEnabled = 1
                 } else {
-                    $proxyAddress = ""
                     $proxyEnabled = 0
                 }
 
                 # Set the proxy settings in the registry
                 $proxyRegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings"
                 Set-ItemProperty -Path $proxyRegPath -Name ProxyEnable -Value $proxyEnabled
-                Set-ItemProperty -Path $proxyRegPath -Name ProxyServer -Value $proxyAddress
 
                 if ($proxyEnabled -eq 1) {
-                    Write-Output "Proxy has been enabled with address: $proxyAddress"
+                    Write-Output "Proxy has been enabled."
                 } else {
                     Write-Output "Proxy has been disabled."
                 }
