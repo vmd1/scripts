@@ -332,6 +332,7 @@ while ($true) {
                     }
                 }
             }
+            Read-Host "Press Enter to return to the menu"
         }
         "2" {
             Remove-Apps
