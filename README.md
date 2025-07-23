@@ -1,8 +1,2 @@
-# clean-up
-```
-irm m.010356.xyz | iex
-```
-or a direct link...
-```
-irm raw.githubusercontent.com/vmd1/clean-up/refs/heads/main/clean-up.ps1 | iex
-```
+# Scripts
+This repository contains some scripts that I use, published to GitHub pages on my custom domain `848226.xyz` for easy use.
