@@ -5,6 +5,11 @@
     "oses": ["windows"]
   },
   {
+    "name": "Automatic Cleanup Script",
+    "url": "https://sc.vmd1.dev/clean-up/unattended.ps1",
+    "oses": ["windows"]
+  },
+  {
     "name": "Provision Node",
     "url": "https://sc.vmd1.dev/node-provision/main.sh",
     "oses": ["linux"]
