@@ -10,7 +10,22 @@ try {
     exit
 }
 
-$winScripts = $json | Where-Object { $_.oses -contains "windows" }
+function Is-WindowsScript($script) {
+    if ($null -eq $script.oses) { return $false }
+    $oses = $script.oses
+    if ($oses -is [string]) { $oses = @($oses) }
+    foreach ($os in $oses) {
+        if ($os.ToLower() -eq "windows") { return $true }
+    }
+    return $false
+}
+
+$winScripts = @()
+foreach ($script in $json) {
+    if (Is-WindowsScript $script) {
+        $winScripts += $script
+    }
+}
 if ($winScripts.Count -eq 0) {
     Write-Host "No Windows scripts available." -ForegroundColor Yellow
     Remove-Item $tmpJson -Force
