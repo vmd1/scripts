@@ -15,6 +15,16 @@
     "oses": ["windows"]
   },
   {
+    "name": "Winget Installation Script",
+    "url": "https://asheroto.com/winget",
+    "oses": ["windows"]
+  },
+  {
+    "name": "Provision Node",
+    "url": "https://get.scoop.sh",
+    "oses": ["windows"]
+  },
+  {
     "name": "Provision Node",
     "url": "https://sc.vmd1.dev/node-provision/main.sh",
     "oses": ["linux"]
@@ -28,5 +38,36 @@
     "name": "Docker Install Script",
     "url": "https://get.docker.com",
     "oses": ["linux"]
+  },
+  {
+    "name": "Install Oh My Zsh",
+    "url": "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Neofetch",
+    "url": "https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Install NVM (Node Version Manager)",
+    "url": "https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Install Rust (Rustup)",
+    "url": "https://sh.rustup.rs",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Install SDKMAN (Java Version Manager)",
+    "url": "https://get.sdkman.io",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Install Homebrew (Linuxbrew)",
+    "url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
+    "oses": ["linux"]
   }
+
 ]
