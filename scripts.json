@@ -1,12 +1,17 @@
 [
   {
-    "name": "Cleanup Script",
+    "name": "Windows Tools",
     "url": "https://sc.vmd1.dev/clean-up/main.ps1",
     "oses": ["windows"]
   },
   {
     "name": "Automatic Cleanup Script",
     "url": "https://sc.vmd1.dev/clean-up/unattended.ps1",
+    "oses": ["windows"]
+  },
+  {
+    "name": "Windows Activation Script",
+    "url": "https://get.activated.win",
     "oses": ["windows"]
   },
   {
