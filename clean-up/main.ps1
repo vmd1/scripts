@@ -309,15 +309,12 @@ while ($true) {
     Write-Host "1. View all installed applications"
     Write-Host "2. Uninstall applications"
     Write-Host "3. Delete specific registry entries"
-    Write-Host "4. Empty Recycle Bin"
-    Write-Host "5. View all MSIX/AppX Packages"
-    Write-Host "6. Remove an AppX Package"
-    Write-Host "7. View AppLocker Policies"
-    Write-Host "8. Proxy Configuration"
-    Write-Host "9. Check if ndns is being used"
-    Write-Host "10. Check if Senso and Smoothwall endpoints are accessible"
-    Write-Host "11. Exit"
-    $choice = Read-Host -Prompt (Write-Host "Enter your choice (1/2/3/4/5/6/7/8/9/10)" -ForegroundColor Green)
+    Write-Host "4. View all MSIX/AppX Packages"
+    Write-Host "5. Remove an AppX Package"
+    Write-Host "6. View AppLocker Policies"
+    Write-Host "7. Proxy Configuration"
+    Write-Host "8. Exit"
+    $choice = Read-Host -Prompt (Write-Host "Enter your choice (1/2/3/4/5/6/7/8)" -ForegroundColor Green)
 
     switch ($choice) {
         "1" {
@@ -341,28 +338,19 @@ while ($true) {
             Remove-RegistryEntry
         }
         "4" {
-            Empty-RecycleBin
-        }
-        "5" {
             Get-AppxPackages
         }
-        "6" {
+        "5" {
             Remove-AppxByName
         }
-        "11" {
+        "8" {
             Exit-Script
         }
-        "7" {
+        "6" {
             View-AppLockerPolicies
         }
-        "8" {
+        "7" {
             Enable-Proxy
-        }
-        "9" {
-            Check-NDNS
-        }
-        "10" {
-            Check-APIReachability
         }
         default {
             Write-Output "Invalid choice. Please select a valid option."

@@ -5,6 +5,11 @@
     "oses": ["windows"]
   },
   {
+    "name": "500+ Powershell Scripts",
+    "url": "https://sc.vmd1.dev/500plus/main.ps1",
+    "oses": ["windows"]
+  },
+  {
     "name": "Automatic Cleanup Script",
     "url": "https://sc.vmd1.dev/clean-up/unattended.ps1",
     "oses": ["windows"]

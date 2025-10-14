@@ -10,3 +10,5 @@ curl -s https://sc.vmd1.dev/l | bash
 ```
 irm https://sc.vmd1.dev/w | iex
 ```
+
+> Credit to @fleschutz for the 500+ Powershell Scripts
