@@ -10,17 +10,17 @@
     "oses": ["windows"]
   },
   {
-    "name": "Windows Activation Script",
+    "name": "Activate Windows",
     "url": "https://get.activated.win",
     "oses": ["windows"]
   },
   {
-    "name": "Winget Installation Script",
+    "name": "Install Winget",
     "url": "https://asheroto.com/winget",
     "oses": ["windows"]
   },
   {
-    "name": "Provision Node",
+    "name": "Install Scoop",
     "url": "https://get.scoop.sh",
     "oses": ["windows"]
   },
@@ -30,12 +30,12 @@
     "oses": ["linux"]
   },
   {
-    "name": "Tailscale Install Script",
+    "name": "Install Tailscale",
     "url": "https://tailscale.com/install.sh",
     "oses": ["linux"]
   },
   {
-    "name": "Docker Install Script",
+    "name": "Install Docker",
     "url": "https://get.docker.com",
     "oses": ["linux"]
   },
@@ -69,5 +69,4 @@
     "url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
     "oses": ["linux"]
   }
-
 ]
