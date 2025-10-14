@@ -18,5 +18,15 @@
     "name": "Provision Node",
     "url": "https://sc.vmd1.dev/node-provision/main.sh",
     "oses": ["linux"]
+  },
+  {
+    "name": "Tailscale Install Script",
+    "url": "https://tailscale.com/install.sh",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Docker Install Script",
+    "url": "https://get.docker.com",
+    "oses": ["linux"]
   }
 ]
