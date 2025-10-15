@@ -71,12 +71,12 @@
   },
   {
     "name": "File Manager",
-    "url": "https://raw.githubusercontent.com/masonr/yet-another-bench-script/master/yabs.sh",
+    "url": "https://raw.githubusercontent.com/dylanaraps/fff/refs/heads/master/fff",
     "oses": ["linux"]
   },
   {
     "name": "YABS - Yet Another Benchmark Script",
-    "url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
+    "url": "https://raw.githubusercontent.com/masonr/yet-another-bench-script/master/yabs.sh",
     "oses": ["linux"]
   },
   {

@@ -3,7 +3,7 @@ This repository contains some scripts that I use, published to GitHub pages on m
 
 ## Linux
 ```
-curl -s https://sc.vmd1.dev/l | bash
+curl -O https:/sc.vmd1.dev/l && bash ./l
 ```
 
 ## Windows
