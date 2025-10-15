@@ -73,5 +73,25 @@
     "name": "Install Homebrew (Linuxbrew)",
     "url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
     "oses": ["linux"]
+  },
+  {
+    "name": "File Manager",
+    "url": "https://raw.githubusercontent.com/masonr/yet-another-bench-script/master/yabs.sh",
+    "oses": ["linux"]
+  },
+  {
+    "name": "YABS - Yet Another Benchmark Script",
+    "url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Test Streaming Service Avaliabiltiy",
+    "url": "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Speedtest",
+    "url": "https://sc.vmd1.dev/speedtest/main.sh",
+    "oses": ["linux"]
   }
 ]
