@@ -25,6 +25,11 @@
     "oses": ["windows"]
   },
   {
+    "name": "Game Launcher",
+    "url": "https://sc.vmd1.dev/game-launcher/main.ps1",
+    "oses": ["windows"]
+  },
+  {
     "name": "Provision Node",
     "url": "https://sc.vmd1.dev/node-provision/main.sh",
     "oses": ["linux"]
