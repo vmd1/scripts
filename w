@@ -38,20 +38,40 @@ while ($true) {
         Write-Host "$($i+1). $($winScripts[$i].name)"
     }
     Write-Host "q. Quit"
-    $choice = Read-Host "Select a script to view details or run (number)"
+    $choice = Read-Host "Select a script to view details or run (number or comma-separated list)"
     if ($choice -eq "q") { break }
-    if ($choice -match "^[0-9]+$" -and $choice -ge 1 -and $choice -le $winScripts.Count) {
-        $idx = $choice - 1
-        $script = $winScripts[$idx]
-        Write-Host "`nName: $($script.name)"
-        Write-Host "URL: $($script.url)"
-        $run = Read-Host "Run this script now? (y/n)"
-        if ($run -eq "y") {
-            Write-Host "Running $($script.name)..."
-            Invoke-WebRequest -Uri $script.url -UseBasicParsing | Invoke-Expression
+
+    # Remove whitespace and split on commas
+    $choice = $choice -replace '\s',''
+    $selected = $choice -split ','
+
+    $validIdx = @()
+    foreach ($item in $selected) {
+        if ($item -match '^[0-9]+$' -and [int]$item -ge 1 -and [int]$item -le $winScripts.Count) {
+            $validIdx += [int]$item - 1
+        } else {
+            Write-Host "Invalid selection: $item" -ForegroundColor Yellow
         }
-    } else {
+    }
+
+    if ($validIdx.Count -eq 0) {
         Write-Host "Invalid selection." -ForegroundColor Red
+        continue
+    }
+
+    Write-Host "`nSelected scripts:" -ForegroundColor Cyan
+    foreach ($idx in $validIdx) {
+        Write-Host "$($idx+1). $($winScripts[$idx].name)"
+        Write-Host "   URL: $($winScripts[$idx].url)"
+    }
+
+    $run = Read-Host "Run the selected script(s) now? (y/n)"
+    if ($run -eq "y") {
+        foreach ($idx in $validIdx) {
+            $s = $winScripts[$idx]
+            Write-Host "Running $($s.name)..."
+            (Invoke-WebRequest -Uri $s.url -UseBasicParsing).Content | Invoke-Expression
+        }
     }
     Write-Host ""
 }

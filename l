@@ -13,8 +13,8 @@ if [ ! -s "$TMP_JSON" ]; then
 fi
 
 # Parse and filter for Linux scripts
-NAMES=( $(jq -r '.[] | select(.oses[] | test("linux"; "i")) | .name' "$TMP_JSON") )
-URLS=( $(jq -r '.[] | select(.oses[] | test("linux"; "i")) | .url' "$TMP_JSON") )
+mapfile -t NAMES < <(jq -r '.[] | select(.oses[] | test("linux"; "i")) | .name' "$TMP_JSON")
+mapfile -t URLS < <(jq -r '.[] | select(.oses[] | test("linux"; "i")) | .url' "$TMP_JSON")
 COUNT=${#NAMES[@]}
 
 if [ "$COUNT" -eq 0 ]; then
@@ -29,23 +29,44 @@ while true; do
     echo "$((i+1)). ${NAMES[$i]}"
   done
   echo "q. Quit"
-  read -p "Select a script to view details or run (number): " CHOICE
+  read -p "Select a script to view details or run (number or comma-separated list): " CHOICE
   if [[ "$CHOICE" == "q" ]]; then
     break
   fi
-  if [[ "$CHOICE" =~ ^[0-9]+$ ]] && [ "$CHOICE" -ge 1 ] && [ "$CHOICE" -le "$COUNT" ]; then
-    IDX=$((CHOICE-1))
-    NAME="${NAMES[$IDX]}"
-    URL="${URLS[$IDX]}"
-    echo "\nName: $NAME"
-    echo "URL: $URL"
-    read -p "Run this script now? (y/n): " RUN
-    if [[ "$RUN" == "y" ]]; then
+
+  # Remove whitespace and split comma-separated selections
+  CHOICE="${CHOICE//[[:space:]]/}"
+  IFS=',' read -ra SEL <<< "$CHOICE"
+
+  VALID_IDX=()
+  for item in "${SEL[@]}"; do
+    if [[ "$item" =~ ^[0-9]+$ ]] && [ "$item" -ge 1 ] && [ "$item" -le "$COUNT" ]; then
+      VALID_IDX+=( $((item-1)) )
+    else
+      echo "Invalid selection: $item"
+    fi
+  done
+
+  if [ ${#VALID_IDX[@]} -eq 0 ]; then
+    echo "Invalid selection."
+    echo ""
+    continue
+  fi
+
+  printf "\nSelected scripts:\n"
+  for idx in "${VALID_IDX[@]}"; do
+    echo "$((idx+1)). ${NAMES[$idx]}"
+    printf "   URL: %s\n" "${URLS[$idx]}"
+  done
+
+  read -p "Run the selected script(s) now? (y/n): " RUN
+  if [[ "$RUN" == "y" ]]; then
+    for idx in "${VALID_IDX[@]}"; do
+      NAME="${NAMES[$idx]}"
+      URL="${URLS[$idx]}"
       echo "Running $NAME..."
       curl -s "$URL" | bash
-    fi
-  else
-    echo "Invalid selection."
+    done
   fi
   echo ""
 done
