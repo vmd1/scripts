@@ -181,7 +181,8 @@
                             </div>
                             <button 
                                 class="copy-btn px-3 py-2 bg-purple-600 hover:bg-purple-700 rounded text-white text-xs font-medium transition"
-                                onclick="copyCommand(this, '${generateCommand(script).replace(/'/g, "\\'")}', '${script.name}')"
+                                data-command="${generateCommand(script)}"
+                                data-name="${script.name}"
                                 title="Copy command"
                             >
                                 📋
@@ -226,6 +227,15 @@
                 console.error('Failed to copy:', err);
             });
         }
+
+        // Event delegation for copy buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('copy-btn')) {
+                const command = e.target.dataset.command;
+                const name = e.target.dataset.name;
+                copyCommand(e.target, command, name);
+            }
+        });
 
         // Event listeners
         document.getElementById('searchInput').addEventListener('input', (e) => {
