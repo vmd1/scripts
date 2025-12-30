@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scripts - vmd1.dev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #e0e7ff;
+        }
+        .glass-effect {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        .script-card {
+            transition: all 0.3s ease;
+        }
+        .script-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            background: rgba(139, 92, 246, 0.2);
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .tag.windows {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .command-box {
+            background: rgba(30, 27, 46, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            word-break: break-all;
+            color: #a78bfa;
+        }
+        .copy-btn {
+            transition: all 0.2s ease;
+        }
+        .copy-btn:hover {
+            background: rgba(139, 92, 246, 0.5);
+        }
+        .copy-btn.copied {
+            background: rgba(34, 197, 94, 0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="mb-12">
+            <h1 class="text-4xl sm:text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Scripts
+            </h1>
+            <p class="text-gray-400">Discover and run scripts with a single command</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="glass-effect p-6 rounded-lg mb-8 space-y-4">
+            <!-- Search -->
+            <div>
+                <label class="block text-sm font-medium mb-2">Search</label>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search scripts by name..."
+                    class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition"
+                >
+            </div>
+
+            <!-- OS Filter -->
+            <div>
+                <label class="block text-sm font-medium mb-2">Filter by OS</label>
+                <div class="flex flex-wrap gap-2">
+                    <button 
+                        class="os-filter-btn px-4 py-2 rounded-lg border transition all active"
+                        data-os="all"
+                    >
+                        All
+                    </button>
+                    <button 
+                        class="os-filter-btn px-4 py-2 rounded-lg border transition all"
+                        data-os="windows"
+                    >
+                        Windows
+                    </button>
+                    <button 
+                        class="os-filter-btn px-4 py-2 rounded-lg border transition all"
+                        data-os="linux"
+                    >
+                        Linux
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts Grid -->
+        <div id="scriptsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="col-span-full text-center py-12">
+                <div class="inline-block">
+                    <svg class="animate-spin h-8 w-8 text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allScripts = [];
+        let filteredScripts = [];
+        let currentOSFilter = 'all';
+        let currentSearchQuery = '';
+
+        // Fetch scripts
+        async function loadScripts() {
+            try {
+                const response = await fetch('scripts.json');
+                allScripts = await response.json();
+                filteredScripts = allScripts;
+                renderScripts();
+            } catch (error) {
+                console.error('Failed to load scripts:', error);
+                document.getElementById('scriptsContainer').innerHTML = '<p class="col-span-full text-center text-red-400">Failed to load scripts</p>';
+            }
+        }
+
+        // Filter scripts
+        function filterScripts() {
+            filteredScripts = allScripts.filter(script => {
+                const matchesOS = currentOSFilter === 'all' || script.oses.includes(currentOSFilter);
+                const matchesSearch = script.name.toLowerCase().includes(currentSearchQuery.toLowerCase());
+                return matchesOS && matchesSearch;
+            });
+            renderScripts();
+        }
+
+        // Render scripts
+        function renderScripts() {
+            const container = document.getElementById('scriptsContainer');
+            
+            if (filteredScripts.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center py-12"><p class="text-gray-400">No scripts found</p></div>';
+                return;
+            }
+
+            container.innerHTML = filteredScripts.map(script => `
+                <div class="script-card glass-effect p-6 rounded-lg border border-gray-700">
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold mb-2">${script.name}</h3>
+                        <div class="flex flex-wrap gap-2">
+                            ${script.oses.map(os => `
+                                <span class="tag ${os === 'windows' ? 'windows' : ''}">${os}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p class="text-xs text-gray-400 mb-2">Short Code</p>
+                        <code class="text-purple-300 text-sm">${script['short-code'] || 'N/A'}</code>
+                    </div>
+
+                    <div class="mb-4">
+                        <p class="text-xs text-gray-400 mb-2">Command</p>
+                        <div class="flex gap-2">
+                            <div class="command-box flex-1 text-xs">
+                                ${generateCommand(script)}
+                            </div>
+                            <button 
+                                class="copy-btn px-3 py-2 bg-purple-600 hover:bg-purple-700 rounded text-white text-xs font-medium transition"
+                                onclick="copyCommand(this, '${generateCommand(script).replace(/'/g, "\\'")}', '${script.name}')"
+                                title="Copy command"
+                            >
+                                📋
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-xs text-gray-400 mb-2">Direct URL</p>
+                        <a href="${script.url}" target="_blank" class="text-blue-400 hover:text-blue-300 text-sm break-all">
+                            ${script.url}
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Generate command based on OS
+        function generateCommand(script) {
+            const baseUrl = 'sc.vmd1.dev';
+            if (script.oses.includes('windows')) {
+                const shortCode = script['short-code'] || '';
+                return `irm ${baseUrl}/w -OutFile $env:TEMP\\w.ps1; & $env:TEMP\\w.ps1 ${shortCode}`;
+            } else if (script.oses.includes('linux')) {
+                const shortCode = script['short-code'] || '';
+                return `curl https://${baseUrl}/l -o /tmp/l && bash /tmp/l ${shortCode}`;
+            }
+            return script.url;
+        }
+
+        // Copy command to clipboard
+        function copyCommand(btn, command, scriptName) {
+            navigator.clipboard.writeText(command).then(() => {
+                const original = btn.textContent;
+                btn.textContent = '✓';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = original;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentSearchQuery = e.target.value;
+            filterScripts();
+        });
+
+        document.querySelectorAll('.os-filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.os-filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentOSFilter = btn.dataset.os;
+                filterScripts();
+            });
+        });
+
+        // Style active filter button
+        const style = document.createElement('style');
+        style.textContent = `
+            .os-filter-btn {
+                background: transparent;
+                color: #cbd5e1;
+                border-color: #475569;
+            }
+            .os-filter-btn.active {
+                background: rgba(139, 92, 246, 0.3);
+                color: #c4b5fd;
+                border-color: rgba(139, 92, 246, 0.5);
+            }
+            .os-filter-btn:hover {
+                border-color: rgba(139, 92, 246, 0.5);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Load scripts on page load
+        loadScripts();
+    </script>
+</body>
+</html>

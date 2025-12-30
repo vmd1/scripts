@@ -2,106 +2,127 @@
   {
     "name": "Windows Tools",
     "url": "https://sc.vmd1.dev/clean-up/main.ps1",
-    "oses": ["windows"]
+    "oses": ["windows"],
+    "short-code": "win:WT"
   },
   {
     "name": "Automatic Cleanup Script",
     "url": "https://sc.vmd1.dev/clean-up/unattended.ps1",
-    "oses": ["windows"]
+    "oses": ["windows"],
+    "short-code": "win:ACS"
   },
   {
     "name": "Activate Windows",
     "url": "https://get.activated.win",
-    "oses": ["windows"]
+    "oses": ["windows"],
+    "short-code": "win:AW"
   },
   {
     "name": "Install Winget",
     "url": "https://asheroto.com/winget",
-    "oses": ["windows"]
+    "oses": ["windows"],
+    "short-code": "win:WG"
   },
   {
     "name": "Install Scoop",
     "url": "https://get.scoop.sh",
-    "oses": ["windows"]
+    "oses": ["windows"],
+    "short-code": "win:SC"
   },
   {
     "name": "Game Launcher",
     "url": "https://sc.vmd1.dev/game-launcher/main.ps1",
-    "oses": ["windows"]
+    "oses": ["windows"],
+    "short-code": "win:GL"
   },
   {
     "name": "Provision Node",
     "url": "https://sc.vmd1.dev/node-provision/main.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:PN"
   },
   {
     "name": "Install Tailscale",
     "url": "https://tailscale.com/install.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:TS"
   },
   {
     "name": "Install Docker",
     "url": "https://get.docker.com",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:DK"
   },
   {
     "name": "Install Oh My Zsh",
     "url": "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:OMZ"
   },
   {
     "name": "Neofetch",
     "url": "https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:NF"
   },
   {
     "name": "Install NVM (Node Version Manager)",
     "url": "https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:NVM"
   },
   {
     "name": "Install Rust (Rustup)",
     "url": "https://sh.rustup.rs",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:RS"
   },
   {
     "name": "Install SDKMAN (Java Version Manager)",
     "url": "https://get.sdkman.io",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:SDK"
   },
   {
     "name": "Install Homebrew (Linuxbrew)",
     "url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:HB"
   },
   {
     "name": "File Manager",
     "url": "https://raw.githubusercontent.com/dylanaraps/fff/refs/heads/master/fff",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:FM"
   },
   {
     "name": "YABS - Yet Another Benchmark Script",
     "url": "https://raw.githubusercontent.com/masonr/yet-another-bench-script/master/yabs.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:YABS"
   },
   {
     "name": "Test Streaming Service Avaliabiltiy",
     "url": "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:RSC"
   },
   {
     "name": "Zoxide Install Script",
     "url": "https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:ZX"
   },
   {
     "name": "Starship Install Script",
     "url": "https://starship.rs/install.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:SH"
   },
   {
     "name": "Speedtest",
     "url": "https://sc.vmd1.dev/speedtest/main.sh",
-    "oses": ["linux"]
+    "oses": ["linux"],
+    "short-code": "linux:ST"
   }
 ]
