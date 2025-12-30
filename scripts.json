@@ -90,6 +90,16 @@
     "oses": ["linux"]
   },
   {
+    "name": "Zoxide Install Script",
+    "url": "https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh",
+    "oses": ["linux"]
+  },
+  {
+    "name": "Starship Install Script",
+    "url": "https://starship.rs/install.sh",
+    "oses": ["linux"]
+  },
+  {
     "name": "Speedtest",
     "url": "https://sc.vmd1.dev/speedtest/main.sh",
     "oses": ["linux"]
