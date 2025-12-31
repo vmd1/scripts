@@ -142,5 +142,17 @@
     "url": "https://sc.vmd1.dev/linux-tools/bat.sh",
     "oses": ["linux"],
     "short-code": "linux:BAT"
+  },
+  {
+    "name": "VMD1 Script Console Installation",
+    "url": "https://sc.vmd1.dev/linux-tools/install-vmd1-sc.sh",
+    "oses": ["linux"],
+    "short-code": "linux:VMD1SC"
+  },
+  {
+    "name": "VMD1 Script Console Uninstallation",
+    "url": "https://sc.vmd1.dev/linux-tools/uninstall-vmd1-sc.sh",
+    "oses": ["linux"],
+    "short-code": "linux:UNVMD1SC"
   }
 ]
