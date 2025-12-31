@@ -36,93 +36,111 @@
     "short-code": "win:GL"
   },
   {
-    "name": "Provision Node",
+    "name": "Node Provisioning",
     "url": "https://sc.vmd1.dev/node-provision/main.sh",
     "oses": ["linux"],
     "short-code": "linux:PN"
   },
   {
-    "name": "Install Tailscale",
+    "name": "Tailscale Installation",
     "url": "https://tailscale.com/install.sh",
     "oses": ["linux"],
     "short-code": "linux:TS"
   },
   {
-    "name": "Install Docker",
+    "name": "Docker Installation",
     "url": "https://get.docker.com",
     "oses": ["linux"],
     "short-code": "linux:DK"
   },
   {
-    "name": "Install Oh My Zsh",
+    "name": "Oh My Zsh Installation",
     "url": "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh",
     "oses": ["linux"],
     "short-code": "linux:OMZ"
   },
   {
-    "name": "Neofetch",
+    "name": "Neofetch System Info",
     "url": "https://raw.githubusercontent.com/dylanaraps/neofetch/master/neofetch",
     "oses": ["linux"],
     "short-code": "linux:NF"
   },
   {
-    "name": "Install NVM (Node Version Manager)",
+    "name": "NVM (Node Version Manager) Installation",
     "url": "https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh",
     "oses": ["linux"],
     "short-code": "linux:NVM"
   },
   {
-    "name": "Install Rust (Rustup)",
+    "name": "Rust (Rustup) Installation",
     "url": "https://sh.rustup.rs",
     "oses": ["linux"],
     "short-code": "linux:RS"
   },
   {
-    "name": "Install SDKMAN (Java Version Manager)",
+    "name": "SDKMAN (Java Version Manager) Installation",
     "url": "https://get.sdkman.io",
     "oses": ["linux"],
     "short-code": "linux:SDK"
   },
   {
-    "name": "Install Homebrew (Linuxbrew)",
+    "name": "Homebrew (Linuxbrew) Installation",
     "url": "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh",
     "oses": ["linux"],
     "short-code": "linux:HB"
   },
   {
-    "name": "File Manager",
+    "name": "FFF File Manager",
     "url": "https://raw.githubusercontent.com/dylanaraps/fff/refs/heads/master/fff",
     "oses": ["linux"],
     "short-code": "linux:FM"
   },
   {
-    "name": "YABS - Yet Another Benchmark Script",
+    "name": "Yet Another Benchmark Script (YABS)",
     "url": "https://raw.githubusercontent.com/masonr/yet-another-bench-script/master/yabs.sh",
     "oses": ["linux"],
     "short-code": "linux:YABS"
   },
   {
-    "name": "Test Streaming Service Avaliabiltiy",
+    "name": "Streaming Service Availability Test",
     "url": "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/check.sh",
     "oses": ["linux"],
     "short-code": "linux:RSC"
   },
   {
-    "name": "Zoxide Install Script",
+    "name": "Zoxide Installation",
     "url": "https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh",
     "oses": ["linux"],
     "short-code": "linux:ZX"
   },
   {
-    "name": "Starship Install Script",
+    "name": "Starship Installation",
     "url": "https://starship.rs/install.sh",
     "oses": ["linux"],
     "short-code": "linux:SH"
   },
   {
-    "name": "Speedtest",
+    "name": "Atuin Installation",
+    "url": "https://setup.atuin.sh",
+    "oses": ["linux"],
+    "short-code": "linux:AT"
+  },
+  {
+    "name": "Speed Test",
     "url": "https://sc.vmd1.dev/speedtest/main.sh",
     "oses": ["linux"],
     "short-code": "linux:ST"
+  },
+  {
+    "name": "Exa Installation",
+    "url": "https://sc.vmd1.dev/linux-tools/exa.sh",
+    "oses": ["linux"],
+    "short-code": "linux:EXA"
+  },
+  {
+    "name": "Bat Installation",
+    "url": "https://sc.vmd1.dev/linux-tools/bat.sh",
+    "oses": ["linux"],
+    "short-code": "linux:BAT"
   }
 ]
